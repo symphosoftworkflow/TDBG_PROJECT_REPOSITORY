@@ -1,0 +1,40 @@
+classDiagram
+  class User {
+    id
+    email
+    account_type
+    role
+  }
+  class Package {
+    code
+    price_thb
+    duration_days
+  }
+  class Subscription {
+    status
+    starts_at
+    ends_at
+  }
+  class Payment {
+    provider_ref
+    amount_thb
+    status
+  }
+  class Analysis {
+    input_json
+    result_json
+  }
+  class EntryDraft {
+    fields_json
+    status
+  }
+  class AuditCase {
+    status
+  }
+  User "1" --> "*" Subscription
+  Package "1" --> "*" Subscription
+  User "1" --> "*" Payment
+  Subscription "1" --> "*" Payment
+  User "1" --> "*" Analysis
+  User "1" --> "*" EntryDraft
+  User "1" --> "*" AuditCase

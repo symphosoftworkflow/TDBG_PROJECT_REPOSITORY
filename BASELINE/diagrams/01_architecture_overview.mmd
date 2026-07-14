@@ -1,0 +1,8 @@
+flowchart LR
+  Browser[Svelte5_shadcn]
+  API[Go_API]
+  DB[(PostgreSQL)]
+  Pay[PaymentGateway]
+  Browser -->|REST_JSON_JWT| API
+  API --> DB
+  API -->|Checkout_Webhook| Pay

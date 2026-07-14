@@ -1,0 +1,39 @@
+flowchart TB
+  subgraph client [Frontend]
+    UI[Svelte5_shadcn_Routes]
+  end
+  subgraph api [Go_Modular_Monolith]
+    Auth[auth]
+    Billing[billing]
+    Ent[entitlement]
+    Tariff[tariff]
+    Pre[pretrade]
+    Entry[entryprep]
+    Audit[postaudit]
+    Hist[history]
+    Adm[admin]
+  end
+  DB[(PostgreSQL)]
+  Pay[PaymentGateway]
+  UI --> Auth
+  UI --> Billing
+  UI --> Tariff
+  UI --> Pre
+  UI --> Entry
+  UI --> Audit
+  UI --> Hist
+  UI --> Adm
+  Auth --> DB
+  Billing --> DB
+  Billing --> Pay
+  Ent --> DB
+  Tariff --> DB
+  Pre --> DB
+  Entry --> DB
+  Audit --> DB
+  Hist --> DB
+  Adm --> DB
+  Pre --> Ent
+  Entry --> Ent
+  Audit --> Ent
+  Tariff --> Ent

@@ -1,0 +1,27 @@
+flowchart LR
+  Ind[Individual]
+  Co[Company]
+  Br[Broker]
+  Ad[Admin]
+  UC0[RegisterLoginPackagesPay]
+  UC1[CostEstimation]
+  UC2[TariffIntelligence]
+  UC3[CustomsEntryPrep]
+  UC4[PostAudit]
+  UC5[HistoryDashboard]
+  UC6[AdminUsersData]
+  Ind --> UC0
+  Co --> UC0
+  Br --> UC0
+  Ind --> UC1
+  Ind --> UC2
+  Ind --> UC5
+  Co --> UC1
+  Co --> UC2
+  Co --> UC5
+  Br --> UC1
+  Br --> UC2
+  Br --> UC3
+  Br --> UC4
+  Br --> UC5
+  Ad --> UC6

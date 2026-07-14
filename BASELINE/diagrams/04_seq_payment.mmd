@@ -1,0 +1,21 @@
+sequenceDiagram
+  participant U as User
+  participant FE as Svelte
+  participant API as Go_API
+  participant GW as PaymentGateway
+  participant DB as Postgres
+  U->>FE: Select package Importer or Broker
+  FE->>API: POST /billing/checkout
+  API->>DB: Insert payment pending
+  API->>GW: Create checkout session
+  GW-->>API: checkout_url
+  API-->>FE: checkout_url
+  FE->>GW: Redirect pay
+  GW->>API: Webhook payment success
+  API->>DB: Update payment success
+  API->>DB: Upsert subscription active
+  API-->>GW: 200 OK
+  U->>FE: Open /account or /app
+  FE->>API: GET /billing/subscription
+  API->>DB: Load subscription
+  API-->>FE: package code and ends_at

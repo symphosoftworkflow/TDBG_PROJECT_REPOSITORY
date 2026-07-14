@@ -1,0 +1,13 @@
+erDiagram
+  USERS ||--o{ SUBSCRIPTIONS : has
+  PACKAGES ||--o{ SUBSCRIPTIONS : defines
+  USERS ||--o{ PAYMENTS : makes
+  SUBSCRIPTIONS ||--o{ PAYMENTS : billed_as
+  USERS ||--o{ USAGE_QUOTAS : tracks
+  USERS ||--o{ ANALYSES : creates
+  USERS ||--o{ DOCUMENTS : uploads
+  USERS ||--o{ ENTRY_DRAFTS : prepares
+  ENTRY_DRAFTS ||--o| PREFLIGHT_RESULTS : has
+  USERS ||--o{ AUDIT_CASES : opens
+  AUDIT_CASES ||--o{ AUDIT_FINDINGS : contains
+  TARIFF_HS_CODES ||--o{ FTA_RATES : rated_by

@@ -1,0 +1,10 @@
+flowchart LR
+  UserBrowser[User_Browser]
+  Static[Static_Hosting_Svelte]
+  App[Go_API_Service]
+  DB[(PostgreSQL)]
+  GW[PaymentGateway_SaaS]
+  UserBrowser --> Static
+  UserBrowser --> App
+  App --> DB
+  App --> GW

@@ -49,16 +49,7 @@ TradeBridge Digital ออกแบบเป็นเว็บแอปพลิ
 2. **Application API** — Go HTTP API (JSON REST) ยืนยันตัวตนด้วย JWT และบังคับสิทธิ์แพ็กเกจผ่าน entitlement middleware
 3. **Data & External** — PostgreSQL เป็นระบบจัดเก็บหลัก; Payment Gateway สำหรับ checkout และ webhook
 
-```mermaid
-flowchart LR
-  Browser[Svelte5_shadcn]
-  API[Go_API]
-  DB[(PostgreSQL)]
-  Pay[PaymentGateway]
-  Browser -->|REST_JSON_JWT| API
-  API --> DB
-  API -->|Checkout_Webhook| Pay
-```
+![Architecture Overview](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/01_architecture_overview.svg)
 
 **มาตรฐานการสื่อสาร**
 
@@ -264,243 +255,43 @@ Frontend จัดโครงสร้างตาม route ที่สอด�
 
 ## 4. แผนภาพประกอบ (Diagrams)
 
+> **Note (maintainers):** source Mermaid files live in `BASELINE/diagrams/*.mmd` — ไฟล์ต้นฉบับ Mermaid อยู่ที่โฟลเดอร์นี้สำหรับแก้ไดอะแกรม
+
 ### 4.1 แผนภาพ Component (Component Diagram)
 
-```mermaid
-flowchart TB
-  subgraph client [Frontend]
-    UI[Svelte5_shadcn_Routes]
-  end
-  subgraph api [Go_Modular_Monolith]
-    Auth[auth]
-    Billing[billing]
-    Ent[entitlement]
-    Tariff[tariff]
-    Pre[pretrade]
-    Entry[entryprep]
-    Audit[postaudit]
-    Hist[history]
-    Adm[admin]
-  end
-  DB[(PostgreSQL)]
-  Pay[PaymentGateway]
-  UI --> Auth
-  UI --> Billing
-  UI --> Tariff
-  UI --> Pre
-  UI --> Entry
-  UI --> Audit
-  UI --> Hist
-  UI --> Adm
-  Auth --> DB
-  Billing --> DB
-  Billing --> Pay
-  Ent --> DB
-  Tariff --> DB
-  Pre --> DB
-  Entry --> DB
-  Audit --> DB
-  Hist --> DB
-  Adm --> DB
-  Pre --> Ent
-  Entry --> Ent
-  Audit --> Ent
-  Tariff --> Ent
-```
+![Component Diagram](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/02_component.svg)
 
 ### 4.2 แผนภาพโดเมนหลัก (Domain / Class Overview)
 
-```mermaid
-classDiagram
-  class User {
-    id
-    email
-    account_type
-    role
-  }
-  class Package {
-    code
-    price_thb
-    duration_days
-  }
-  class Subscription {
-    status
-    starts_at
-    ends_at
-  }
-  class Payment {
-    provider_ref
-    amount_thb
-    status
-  }
-  class Analysis {
-    input_json
-    result_json
-  }
-  class EntryDraft {
-    fields_json
-    status
-  }
-  class AuditCase {
-    status
-  }
-  User "1" --> "*" Subscription
-  Package "1" --> "*" Subscription
-  User "1" --> "*" Payment
-  Subscription "1" --> "*" Payment
-  User "1" --> "*" Analysis
-  User "1" --> "*" EntryDraft
-  User "1" --> "*" AuditCase
-```
+![Domain Class Diagram](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/03_domain_class.svg)
 
 ### 4.3 แผนภาพ Sequence — Payment → Entitlement
 
-```mermaid
-sequenceDiagram
-  participant U as User
-  participant FE as Svelte
-  participant API as Go_API
-  participant GW as PaymentGateway
-  participant DB as Postgres
-  U->>FE: Select package Importer or Broker
-  FE->>API: POST /billing/checkout
-  API->>DB: Insert payment pending
-  API->>GW: Create checkout session
-  GW-->>API: checkout_url
-  API-->>FE: checkout_url
-  FE->>GW: Redirect pay
-  GW->>API: Webhook payment success
-  API->>DB: Update payment success
-  API->>DB: Upsert subscription active
-  API-->>GW: 200 OK
-  U->>FE: Open /account or /app
-  FE->>API: GET /billing/subscription
-  API->>DB: Load subscription
-  API-->>FE: package code and ends_at
-```
+![Payment Sequence](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/04_seq_payment.svg)
 
 ### 4.4 แผนภาพ Sequence — Pre-trade Analysis
 
-```mermaid
-sequenceDiagram
-  participant U as User
-  participant FE as Svelte
-  participant API as Go_API
-  participant ENT as entitlement
-  participant DB as Postgres
-  U->>FE: Submit pretrade form
-  FE->>API: POST /pretrade/analyses
-  API->>ENT: Check package and quota
-  alt not entitled or quota exceeded
-    ENT-->>API: deny
-    API-->>FE: 403 ENTITLEMENT_REQUIRED or QUOTA_EXCEEDED
-  else ok
-    API->>DB: Load FTA rates and HS
-    API->>DB: Save analysis result
-    API->>DB: Increment usage_quotas if Trial
-    API-->>FE: 201 analysis result
-  end
-```
+![Pre-Trade Sequence](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/05_seq_pretrade.svg)
 
 ### 4.5 แผนภาพ Sequence — Entry Preflight
 
-```mermaid
-sequenceDiagram
-  participant U as BrokerUser
-  participant FE as Svelte
-  participant API as Go_API
-  participant DB as Postgres
-  U->>FE: Upload docs and process
-  FE->>API: POST /entry/documents multipart
-  API->>DB: Store documents
-  FE->>API: POST /entry/drafts/process
-  API->>DB: Build entry fields and preflight
-  API-->>FE: checklist duty_preview nsp_payload
-```
+![Entry Sequence](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/06_seq_entry.svg)
 
 ### 4.6 แผนภาพ Deployment (Deployment Diagram)
 
-```mermaid
-flowchart LR
-  UserBrowser[User_Browser]
-  Static[Static_Hosting_Svelte]
-  App[Go_API_Service]
-  DB[(PostgreSQL)]
-  GW[PaymentGateway_SaaS]
-  UserBrowser --> Static
-  UserBrowser --> App
-  App --> DB
-  App --> GW
-```
+![Deployment Diagram](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/07_deployment.svg)
 
 ### 4.7 แผนภาพ Use Case (Use Case Diagram)
 
-```mermaid
-flowchart LR
-  Ind[Individual]
-  Co[Company]
-  Br[Broker]
-  Ad[Admin]
-  UC0[RegisterLoginPackagesPay]
-  UC1[CostEstimation]
-  UC2[TariffIntelligence]
-  UC3[CustomsEntryPrep]
-  UC4[PostAudit]
-  UC5[HistoryDashboard]
-  UC6[AdminUsersData]
-  Ind --> UC0
-  Co --> UC0
-  Br --> UC0
-  Ind --> UC1
-  Ind --> UC2
-  Ind --> UC5
-  Co --> UC1
-  Co --> UC2
-  Co --> UC5
-  Br --> UC1
-  Br --> UC2
-  Br --> UC3
-  Br --> UC4
-  Br --> UC5
-  Ad --> UC6
-```
+![Use Case Diagram](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/08_usecase.svg)
 
 ### 4.8 แผนภาพการไหลของผู้ใช้ (User Flow Diagram)
 
-```mermaid
-flowchart TD
-  Start[Landing] --> Reg[Register account_type]
-  Reg --> Login[Login]
-  Login --> Pricing[Package Offer]
-  Pricing --> Trial[Start Trial]
-  Pricing --> Pay[Checkout PaymentGateway]
-  Trial --> App[App Dashboard]
-  Pay -->|success| App
-  App --> M12[Module1_2 if entitled]
-  App --> M34[Module3_4 if Broker]
-  App --> Hist[History]
-  App --> Acc[Account Subscription]
-  M12 -->|Trial quota exceeded| Upgrade[Upgrade banner]
-  Upgrade --> Pricing
-```
+![User Flow](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/09_userflow.svg)
 
 ### 4.9 Enhanced Entity-Relationship (ER Model)
 
-```mermaid
-erDiagram
-  USERS ||--o{ SUBSCRIPTIONS : has
-  PACKAGES ||--o{ SUBSCRIPTIONS : defines
-  USERS ||--o{ PAYMENTS : makes
-  SUBSCRIPTIONS ||--o{ PAYMENTS : billed_as
-  USERS ||--o{ USAGE_QUOTAS : tracks
-  USERS ||--o{ ANALYSES : creates
-  USERS ||--o{ DOCUMENTS : uploads
-  USERS ||--o{ ENTRY_DRAFTS : prepares
-  ENTRY_DRAFTS ||--o| PREFLIGHT_RESULTS : has
-  USERS ||--o{ AUDIT_CASES : opens
-  AUDIT_CASES ||--o{ AUDIT_FINDINGS : contains
-  TARIFF_HS_CODES ||--o{ FTA_RATES : rated_by
-```
+![ER Diagram](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/10_er.svg)
 
 ### 4.10 Data Dictionary (สรุป)
 
@@ -1030,20 +821,7 @@ Main: [Package chip] [Quota Trial]
 
 ### 6.4 แผนภาพทางจอหลัก (UI navigation)
 
-```mermaid
-flowchart LR
-  Pub[Public Register Login Pricing]
-  Acc[Account Checkout]
-  App[App Shell]
-  Pub --> Acc
-  Acc --> App
-  App --> D1[DES1.1 Overview]
-  App --> D2[DES1.2 Pretrade]
-  App --> D3[DES2.1 Tariff]
-  App --> D4[DES3 Entry Broker]
-  App --> D5[DES4 PostAudit Broker]
-  App --> D6[DES5 History]
-```
+![UI Navigation](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/diagrams/11_ui_nav.svg)
 
 ---
 

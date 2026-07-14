@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant U as BrokerUser
+  participant FE as Svelte
+  participant API as Go_API
+  participant DB as Postgres
+  U->>FE: Upload docs and process
+  FE->>API: POST /entry/documents multipart
+  API->>DB: Store documents
+  FE->>API: POST /entry/drafts/process
+  API->>DB: Build entry fields and preflight
+  API-->>FE: checklist duty_preview nsp_payload

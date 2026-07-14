@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant U as User
+  participant FE as Svelte
+  participant API as Go_API
+  participant ENT as entitlement
+  participant DB as Postgres
+  U->>FE: Submit pretrade form
+  FE->>API: POST /pretrade/analyses
+  API->>ENT: Check package and quota
+  alt not entitled or quota exceeded
+    ENT-->>API: deny
+    API-->>FE: 403 ENTITLEMENT_REQUIRED or QUOTA_EXCEEDED
+  else ok
+    API->>DB: Load FTA rates and HS
+    API->>DB: Save analysis result
+    API->>DB: Increment usage_quotas if Trial
+    API-->>FE: 201 analysis result
+  end

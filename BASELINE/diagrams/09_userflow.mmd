@@ -1,0 +1,14 @@
+flowchart TD
+  Start[Landing] --> Reg[Register account_type]
+  Reg --> Login[Login]
+  Login --> Pricing[Package Offer]
+  Pricing --> Trial[Start Trial]
+  Pricing --> Pay[Checkout PaymentGateway]
+  Trial --> App[App Dashboard]
+  Pay -->|success| App
+  App --> M12[Module1_2 if entitled]
+  App --> M34[Module3_4 if Broker]
+  App --> Hist[History]
+  App --> Acc[Account Subscription]
+  M12 -->|Trial quota exceeded| Upgrade[Upgrade banner]
+  Upgrade --> Pricing
