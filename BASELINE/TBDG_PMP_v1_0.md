@@ -22,7 +22,7 @@
 ## 1. วัตถุประสงค์ในการจัดทำแผน
 
 * กำหนดแนวทางในการบริหารจัดการ การดำเนินการ และติดตามโครงการ TradeBridge Digital
-* สรุปความต้องการของระบบ (Detail Requirements) จากเอกสารความต้องการล่าสุดของลูกค้า และเปรียบเทียบกับ Mockup ที่มีอยู่
+* สรุปความต้องการของระบบ (Detail Requirements) จากเอกสารความต้องการล่าสุดของลูกค้า
 * กำหนดงานที่ส่งมอบ ทรัพยากรที่ใช้ ตารางการทำงาน (Project Schedule) และการติดตามผลการดำเนินโครงการ
 * สร้างโครงสร้างพื้นฐานและระบบคุณภาพสำหรับโครงการ (Infrastructure & Quality Management System) ตามแนวทาง ISO/IEC 29110
 * กำหนดขอบเขตงบประมาณการพัฒนาซอฟต์แวร์ (รายการ 5.3–5.11) ให้ไม่เกิน 2,000,000 บาท
@@ -79,27 +79,6 @@
 * **REQ5.3 ความปลอดภัยของข้อมูล (Data Security)**: ข้อมูลผู้ใช้และเอกสารนำเข้าต้องถูกเข้ารหัสในการจัดเก็บและรับส่ง มีการควบคุมสิทธิ์การเข้าถึง และใช้ SSL/TLS บน production
 * **REQ5.4 ความถูกต้องของข้อมูลภาษี**: อัตราภาษีและสิทธิ FTA ใน MVP ต้องอ้างอิงจากแหล่งข้อมูลทุติยภูมิที่อนุมัติ และมีการระบุวันที่อัปเดตข้อมูลให้ผู้ใช้ทราบ
 * **REQ5.5 การใช้งานบนอุปกรณ์ (Responsive Web)**: ระบบต้องใช้งานได้บนเว็บเบราว์เซอร์หลัก และรองรับการแสดงผลแบบ responsive บนหน้าจอมือถือ/แท็บเล็ต (ไม่รวม Mobile Native App ใน Phase 1)
-
-### 2.3 Gap Analysis: Existing Mockup vs Customer Requirements
-
-แหล่งอ้างอิง Mockup: `claudecode/index.html` (frontend mockup เท่านั้น — ไม่มี backend / database / authentication / การคำนวณภาษีจริง)
-
-| Module ตามความต้องการลูกค้า | สถานะใน Mockup | สิ่งที่มีอยู่แล้ว | สิ่งที่ยังขาด / ต้องพัฒนาจริง | ขอบเขต Phase 1 (MVP) |
-| --------------------------- | -------------- | ---------------- | ----------------------------- | -------------------- |
-| Module 1 — Logistics Import Cost Estimation | ครอบคลุมบางส่วน (~70%) | ฟอร์ม Pre-trade (สินค้า/HS, origin, Incoterms, CIF, qty, transport) + ผลลัพธ์จำลอง FTA/duty/Green-Red | ภาษีสรรพสามิต, ภาษีเพื่อมหาดไทย, รหัสสถิติ 3 หลัก, ประมาณเวลาขนส่ง, แนะนำ forwarder/broker, OGA/permit แบบละเอียด, engine คำนวณจริง | รวมใน MVP (Duty Estimator + FTA 3 ฉบับ + Green/Red indicator) |
-| Module 2 — Tariff Intelligence | ครอบคลุมน้อย | Autocomplete ข้อความ/HS จากรายการ hardcoded จำนวนจำกัด | รับรูปภาพสินค้า, ข้อมูลเทคนิค, แนะนำพิกัด 6–8 หลักแบบ AI/rule-based จริง, Tariff DB 200 HS + MFN/ACFTA/AFTA/RCEP | รวมใน MVP (Tariff Intelligence DB + การแนะนำพิกัด; image-based เป็นความสามารถที่ควรรองรับตาม REQ) |
-| Module 3 — Customs Entry Preparation | ครอบคลุมบางส่วน | อัปโหลดเอกสาร, ฟอร์มเที่ยวเรือบางส่วน, mock OCR + JSON preview | ฟิลด์ใบขนครบ ~25 รายการตาม REQ3.2, การสกัดข้อมูลจริงจากเอกสาร, pre-flight ที่มีกฎตรวจจริง, การส่งต่อ NSP จริง | รวมใน MVP ระดับ Web App + business logic ที่รองรับการเตรียมข้อมูลใบขน (integration NSP อาจเป็น staged) |
-| Module 4 — Post-Audit / Import Entry Verification | **ยังไม่มี** | แท็บ Compliance เป็นการบันทึกผลสายตรวจย้อนกลับเพื่อฝึก model (ไม่ใช่การตรวจเอกสารย้อนหลัง) | โมดูลตรวจสอบย้อนหลังทั้งชุด: เปรียบเทียบใบขนกับเอกสารประกอบ, flag error, แนะนำการแก้ไข | รวมในแผนความต้องการลูกค้า — จัดลำดับความสำคัญภายใต้งบประมาณ 2M โดยใช้ Core Business Logic + Verification workflow |
-| Overview / Trade History dashboard | มีใน Mockup (ข้อมูลจำลอง) | KPI, shipment status, trade history 23 รายการ | ข้อมูลจริงจาก DB และสิทธิ์ผู้ใช้ | รองรับใน Web Application ของ MVP |
-| CBAM / Carbon Tracker | มีใน Mockup (นอกขอบเขตความต้องการลูกค้า) | UI แสดง CO₂e | — | **ตัดออกไป Phase 2** (ตามงบประมาณที่ปรับ scope) |
-| Pricing / Broker Workspace / ROI / TB vs TCS | มีใน Mockup (หน้าการตลาด/แพ็กเกจ) | แผน Importer/Broker, ROI calculator | — | **นอกขอบเขตการพัฒนา MVP ตามงบ 2M** (คงเป็นสื่ออธิบายผลิตภัณฑ์ได้ แต่ไม่ใช่ deliverable หลักของโครงการนี้) |
-| ML Model / predictive engine ขั้นสูง | จำลองใน Mockup | setTimeout + Math.random() จำลอง AI | — | **ตัด ML model ไป Phase 2**; MVP ใช้ rule-based Duty Calc + Green/Red |
-
-**สรุปขอบเขต Phase 1 (MVP) ที่สอดคล้องกับงบประมาณ 2,000,000 บาท**
-
-* พัฒนา: Tariff Intelligence DB (HS 200 รายการ + MFN/ACFTA/AFTA/RCEP), Pre-Trade Intelligence (FTA 3 ฉบับหลัก, Duty Estimator, Green/Red Indicator), Core Business Logic Engine (Duty Calc + Green/Red rule-based + FTA Savings), Web Application แบบ responsive, Infrastructure / Cloud / SSL-Security / Testing
-* ใช้ Mockup UI ที่มีอยู่แล้วเป็นจุดเริ่มต้นออกแบบ — ไม่จัดสรรงบ UI/UX เต็มชุดเหมือนแผนเดิม
-* เลื่อนไป Phase 2: Mobile Native App, JTEPA/AIFTA และ FTA เพิ่มเติม, ML Model, CBAM Engine, ฟีเจอร์ Broker multi-tenant workspace เต็มรูปแบบ
 
 ---
 
