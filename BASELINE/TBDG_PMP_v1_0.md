@@ -4,7 +4,7 @@
 **ชื่อระบบงาน [EN]** : TradeBridge Digital — Import Tax & Cost Intelligence Platform
 
 **ชื่อย่อโครงการ** : TBDG  
-**เวอร์ชัน** : 1.0  
+**เวอร์ชัน** : 1.1  
 **จัดทำโดย** : นายปริญญา พงษ์ดนตรี (PM)  
 **วันที่อนุมัติเอกสาร** : [____ เดือน พ.ศ. ____]
 
@@ -16,6 +16,7 @@
 | ----- | -------- | ---------------------- | ------------ | --------------- |
 | 1 | 0.1 | จัดทำเอกสาร แผนการดำเนินโครงการ | นายปริญญา พงษ์ดนตรี (PM) | [____] |
 | 2 | 1.0 | อนุมัติเอกสาร แผนการดำเนินโครงการ | ________________________ (TL) | [____] |
+| 3 | 1.1 | เพิ่ม Access Layer ในขอบเขต โดยคงค่าพัฒนาและคงความลึก Module 1–4 | นายปริญญา พงษ์ดนตรี (PM) | [____] |
 
 ---
 
@@ -32,6 +33,16 @@
 ## 2. สรุปรายละเอียดของความต้องการ (Detail Requirements)
 
 ### 2.1 Functional Requirements
+
+#### 2.1.0 Module 0 — Access, Package & Payment
+
+* **REQ0.1 สมัครบัญชี**: รองรับประเภทบัญชีเป็นบุคคลธรรมดา บริษัท หรือ broker
+* **REQ0.2 เข้าสู่ระบบ / จัดการโปรไฟล์**: ผู้ใช้เข้าสู่ระบบและจัดการข้อมูลบัญชีเบื้องต้นได้
+* **REQ0.3 Package Offer**: แสดงแพ็กเกจ Trial (30 วัน), Importer และ Broker
+* **REQ0.4 Payment**: ชำระเงินจริงผ่าน Payment Gateway และติดตามสถานะ
+* **REQ0.5 Entitlement**: สร้างสิทธิ์หลังชำระเงินสำเร็จ และบังคับใช้ก่อนเข้าถึงโมดูลธุรกิจ
+* **REQ0.6 Trial / หมดอายุ**: รองรับ Trial 30 วัน และการจำกัดสิทธิ์เมื่อหมดอายุ
+* **REQ0.7 สถานะแพ็กเกจและประวัติชำระเงิน**: ผู้ใช้ดูสถานะและประวัติของตนเองได้
 
 #### 2.1.1 Module 1 — การวิเคราะห์ต้นทุนโลจิสติกส์ของผู้ประกอบการนำเข้าในเบื้องต้น (Logistics Import Cost Estimation)
 
@@ -76,7 +87,7 @@
 
 * **REQ5.1 ความเสถียรของระบบ (System Stability)**: ระบบต้องพร้อมใช้งานอย่างต่อเนื่อง โดยมี downtime ไม่เกิน 0.5% ต่อเดือน
 * **REQ5.2 ประสิทธิภาพ (System Performance)**: ระบบต้องรองรับผู้ใช้งานพร้อมกันได้อย่างน้อย 100 sessions โดยไม่ทำให้เวลาตอบสนองของหน้าจอหลักลดลงอย่างมีนัยสำคัญ
-* **REQ5.3 ความปลอดภัยของข้อมูล (Data Security)**: ข้อมูลผู้ใช้และเอกสารนำเข้าต้องถูกเข้ารหัสในการจัดเก็บและรับส่ง มีการควบคุมสิทธิ์การเข้าถึง และใช้ SSL/TLS บน production
+* **REQ5.3 ความปลอดภัยของข้อมูล (Data Security)**: ข้อมูลผู้ใช้ เอกสารนำเข้า และข้อมูลการชำระเงินต้องถูกเข้ารหัสในการจัดเก็บและรับส่ง มีการควบคุมสิทธิ์การเข้าถึง และใช้ SSL/TLS บน production
 * **REQ5.4 ความถูกต้องของข้อมูลภาษี**: อัตราภาษีและสิทธิ FTA ใน MVP ต้องอ้างอิงจากแหล่งข้อมูลทุติยภูมิที่อนุมัติ และมีการระบุวันที่อัปเดตข้อมูลให้ผู้ใช้ทราบ
 * **REQ5.5 การใช้งานบนอุปกรณ์ (Responsive Web)**: ระบบต้องใช้งานได้บนเว็บเบราว์เซอร์หลัก และรองรับการแสดงผลแบบ responsive บนหน้าจอมือถือ/แท็บเล็ต (ไม่รวม Mobile Native App ใน Phase 1)
 
@@ -88,8 +99,8 @@
 | ---- | ----- | ------------- |
 | นายปริญญา พงษ์ดนตรี | PM | บริหารจัดการโครงการ ติดตามความก้าวหน้า ประสาน Stakeholders และ Focus Group |
 | ________________________ | Tech Lead / Analyst | วางแผนสถาปัตยกรรมระบบ วิเคราะห์และออกแบบฟังก์ชัน ควบคุมคุณภาพเทคนิค |
-| ________________________ | UX Designer | ออกแบบ UI/UX และ interaction ของ 4 โมดูล |
-| ________________________ | Backend Dev | พัฒนา Tariff Intelligence DB, Pre-Trade Intelligence, Core Business Logic Engine |
+| ________________________ | UX Designer | ออกแบบ UI/UX ของ Access Layer และ interaction ของ 4 โมดูล |
+| ________________________ | Backend Dev | พัฒนา Access/Payment/Entitlement, Tariff Intelligence DB, Pre-Trade Intelligence, Core Business Logic Engine |
 | ________________________ | Frontend Dev | พัฒนา Web Application และ Mobile Responsive |
 | ________________________ | DevOps | ตั้งค่า Infrastructure, Cloud Server, SSL/Domain/Security |
 | ________________________ | QA Engineer | ทดสอบระบบ (Unit / Integration / UAT support) และจัดทำรายงานผลการทดสอบ |
@@ -115,6 +126,7 @@
 | 1.2 | System Architecture & DB Schema Design | Tech Lead | ██ | █ | | |
 | 1.3 | ประชุมคณะทำงาน ครั้งที่ 1 (Design Review) | PM | | █ | | |
 | **Phase 2 — Core Development** |||||
+| 2.0 | Access Layer (Register, Package, Payment Gateway, Entitlement) | Backend / Frontend | | ██ | ██ | |
 | 2.1 | Tariff Intelligence DB (HS Code 200, MFN+ACFTA+AFTA+RCEP) | Backend Dev | | ██ | ██ | |
 | 2.2 | Pre-Trade Intelligence Module (FTA 3 ฉบับ, Duty Estimator) | Backend Dev | | ██ | ██ | |
 | 2.3 | Core Business Logic Engine (Duty Calc + Green/Red + FTA Savings) | Backend Dev | | ██ | ██ | |
@@ -156,6 +168,8 @@
 | ความถูกต้องของข้อมูลอัตราภาษี / FTA ไม่ครบหรือล้าสมัย | จัดซื้อข้อมูลทุติยภูมิ กำหนดรอบอัปเดต และระบุวันที่ข้อมูลในระบบ | 4 | 5 |
 | ความผิดพลาดในการตีพิกัดศุลกากร (HS classification) | จำกัดขอบเขต MVP ที่ HS 200 รายการ แสดง confidence score และให้ผู้ใช้ยืนยันพิกัด | 4 | 5 |
 | การพึ่งพาการเชื่อมต่อ NSW / TCS / NSP ที่อยู่นอกควบคุม | ออกแบบ data passthrough แบบ staged; มี JSON export สำหรับใช้งานต่อได้แม้ยังไม่เชื่อม API จริง | 3 | 4 |
+| การเชื่อมต่อ Payment Gateway ล่าช้าหรือไม่เสถียร | ออกแบบ entitlement ให้แยกจากตัว gateway; มี sandbox/test mode และ retry/webhook reconciliation | 3 | 5 |
+| ขอบเขต Access Layer เพิ่มขึ้นโดยคงงบและคงความลึก Module 1–4 | จัดลำดับงานขนาน Frontend/Backend, reuse UI แนว Package จาก mockup, และคุม scope เฉพาะ REQ0 MVP | 4 | 4 |
 | ขอบเขต Module 4 (Post-Audit) กว้างกว่าทรัพยากรที่จัดสรรได้ | จัดลำดับความสำคัญ MVP ตาม Module 1–3 เป็นหลัก; ทำ Post-Audit ในระดับ verification workflow ที่ใช้ engine ร่วมกัน | 3 | 4 |
 | ความล่าช้าในการพัฒนาระบบหรือทดสอบภายใน 16 สัปดาห์ | มีแผนสำรอง ตัด non-critical UI polish และเลื่อน Phase 2 ตามที่กำหนดไว้แล้ว | 4 | 4 |
 | ความเสี่ยงด้านความปลอดภัยของเอกสารนำเข้าและข้อมูลผู้ประกอบการ | SSL, encryption, access control, Security Testing ในช่วงท้ายโครงการ | 3 | 5 |
@@ -262,11 +276,12 @@
 
 ขอบเขตงานพัฒนาในรอบนี้มีดังนี้:
 
+* **Access Layer**: Register/Login, Package Offer (Trial / Importer / Broker), Payment Gateway, Entitlement — รวมในงบเดิมโดยไม่ลดความลึก Module 1–4
 * **5.3 Tariff Intelligence DB**: HS Code 200 รายการยุทธศาสตร์ + MFN/ACFTA/AFTA/RCEP
 * **5.4 Pre-Trade Intelligence**: FTA 3 ฉบับหลัก (ACFTA, AFTA, RCEP); Duty Estimator; Green/Red Indicator
 * **5.5 Core Business Logic**: Duty Calc + Green/Red Rule-based + FTA Savings (ไม่รวม ML Model / CBAM Engine)
 * **5.6 Web App**: Web Responsive (ไม่รวม Mobile Native App)
-* **5.7 UI/UX Design**: ออกแบบและพัฒนา UI/UX สำหรับขอบเขต MVP
+* **5.7 UI/UX Design**: ออกแบบและพัฒนา UI/UX สำหรับ Access Layer และ 4 โมดูลธุรกิจ
 
 หมายเหตุ: รายการนอกขอบเขตค่าพัฒนาซอฟต์แวร์นี้ (เช่น ประชุม/Focus Group, ข้อมูลทุติยภูมิ, การตลาด, ประชุมคณะทำงาน, ค่าเบ็ดเตล็ด) จัดทำ/ชำระแยกต่างหากตามข้อตกลงกับลูกค้า
 
