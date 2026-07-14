@@ -1,10 +1,28 @@
 <p align="left">
-  <img src="https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/assets/La-or_Logo.png" alt="บริษัท ลา-ออ จำกัด" width="96" />
+  <img src="https://tbdg.la-or.co.th/assets/La-or_Logo.png" alt="บริษัท ลา-ออ จำกัด" width="96" />
 </p>
 
-# TBDG_PROJECT_REPOSITORY
+# TradeBridge Digital — คลังเอกสารโครงการ
 
-PROJECT REPOSITORY — TradeBridge Digital (Import Tax & Cost Intelligence Platform)
+**ชื่อระบบงาน [TH]** : ระบบยกระดับประสิทธิภาพกระบวนการบริหารจัดการข้อมูลภาษีและต้นทุนการนำเข้าด้วยเทคโนโลยีดิจิทัล  
+**ชื่อระบบงาน [EN]** : TradeBridge Digital — Import Tax & Cost Intelligence Platform  
+**ชื่อย่อโครงการ** : TBDG  
+**ผู้จัดทำเอกสาร** : บริษัท ลา-ออ จำกัด
+
+เอกสารด้านล่างจัดทำตามกรอบ ISO/IEC 29110 สำหรับงวดที่ 1 และพร้อมให้พิจารณา / อนุมัติ
+
+---
+
+## เอกสารที่จัดทำแล้ว (สำหรับอ่านและอนุมัติ)
+
+| ลำดับ | เอกสาร | คำอธิบาย | ลิงก์ |
+| ----- | ------ | -------- | ----- |
+| 1 | **TBDG_PMP_v1_0** | แผนการดำเนินโครงการ (Project Management Plan) | [เปิดเอกสาร](https://tbdg.la-or.co.th/BASELINE/TBDG_PMP_v1_0) |
+| 2 | **TBDG_SOW_v1_0** | ขอบเขตการทำงาน (Statement of Work) | [เปิดเอกสาร](https://tbdg.la-or.co.th/BASELINE/TBDG_SOW_v1_0) |
+| 3 | **TBDG_SRS_v1_0** | สรุปความต้องการของระบบงาน (Software Requirements Specification) | [เปิดเอกสาร](https://tbdg.la-or.co.th/BASELINE/TBDG_SRS_v1_0) |
+| 4 | **TBDG_SDD_v1_0** | การออกแบบระบบ (Software Design Document) | [เปิดเอกสาร](https://tbdg.la-or.co.th/BASELINE/TBDG_SDD_v1_0) |
+
+> เอกสารอื่นตามแม่แบบ ISO/IEC 29110 จะเพิ่มในคลังนี้เมื่อจัดทำในงวดถัดไป
 
 ---
 
