@@ -14,7 +14,7 @@
 | 6 | TBDG_RTM_v1_0 | ยังไม่จัดทำ (Pending) |
 | 7 | TBDG_SC_v1_0 | ยังไม่จัดทำ (Pending) |
 | 8 | TBDG_SDD_v1_0 | ยังไม่จัดทำ (Pending) |
-| 9 | TBDG_SOW_v1_0 | ยังไม่จัดทำ (Pending) |
+| 9 | TBDG_SOW_v1_0 | [TBDG_SOW_v1_0](https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/BASELINE/TBDG_SOW_v1_0) |
 | 10 | TBDG_SRS_v1_0 | ยังไม่จัดทำ (Pending) |
 | 11 | TBDG_TP_v1_0 | ยังไม่จัดทำ (Pending) |
 | 12 | TBDG_TR_v1_0 | ยังไม่จัดทำ (Pending) |
