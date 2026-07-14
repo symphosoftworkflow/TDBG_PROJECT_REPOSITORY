@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="https://symphosoftworkflow.github.io/TDBG_PROJECT_REPOSITORY/assets/La-or_Logo.png" alt="บริษัท ลา-ออ จำกัด" width="96" />
+</p>
+
 # TBDG_PROJECT_REPOSITORY — Document Index (BASELINE)
 
 **ชื่อระบบงาน [TH]** : ระบบยกระดับประสิทธิภาพกระบวนการบริหารจัดการข้อมูลภาษีและต้นทุนการนำเข้าด้วยเทคโนโลยีดิจิทัล  
@@ -33,3 +37,10 @@
 | 20.1 | TBDG_VLD_(dated) | ยังไม่จัดทำ (Pending) |
 
 > หมายเหตุ: หลังเปิดใช้งาน GitHub Pages (Settings → Pages → Source = `main` / root) ลิงก์ของเอกสารที่จัดทำแล้วจะสามารถเปิดดูได้ผ่าน GitHub Pages URL ตามรูปแบบด้านบน
+
+---
+
+**บริษัท ลา-ออ จำกัด**  
+เลขที่ 555/810 หมู่บ้าน สายฝน2 หมู่ที่ 2 ถนนมิตรภาพ ตำบลศิลา อำเภอเมืองขอนแก่น  
+จังหวัดขอนแก่น 40000  
+เลขประจำตัวผู้เสียภาษีอากร : 0405569001324
